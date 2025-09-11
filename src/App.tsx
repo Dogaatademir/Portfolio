@@ -1,0 +1,472 @@
+import { useState, useEffect } from 'react';
+import './App.css';
+
+const App = () => {
+  const [activeSection, setActiveSection] = useState('home');
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleScroll = () => {
+      const sections = ['home', 'about', 'education', 'skills', 'projects', 'contact'];
+      const scrollPosition = window.scrollY + 100;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const height = element.offsetHeight;
+          
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + height) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
+  const projects = [
+    {
+      title: "Kişisel Blog Sitesi",
+      description: "React ve Node.js kullanarak geliştirdiğim responsive blog platformu. Modern tasarım ve kullanıcı dostu arayüz.",
+      image: "https://images.unsplash.com/photo-1486312338219-ce68e2c6b1d6?w=600&h=400&fit=crop",
+      tech: ["React", "Node.js", "Express", "MongoDB"],
+      github: "#",
+      live: "#",
+      status: "Tamamlandı"
+    },
+    {
+      title: "Todo List Uygulaması",
+      description: "Local storage kullanarak veri saklayan, drag & drop özellikli görev yönetimi uygulaması.",
+      image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600&h=400&fit=crop",
+      tech: ["JavaScript", "HTML5", "CSS3", "Local Storage"],
+      github: "#",
+      live: "#",
+      status: "Tamamlandı"
+    },
+    {
+      title: "Hava Durumu Uygulaması",
+      description: "API entegrasyonu ile gerçek zamanlı hava durumu bilgilerini gösteren responsive web uygulaması.",
+      image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=600&h=400&fit=crop",
+      tech: ["Vue.js", "API Integration", "CSS Grid"],
+      github: "#",
+      live: "#",
+      status: "Geliştiriliyor"
+    }
+  ];
+
+  const skills = [
+    { name: "JavaScript", level: 85, icon: "💻", category: "Frontend" },
+    { name: "React", level: 80, icon: "⚛️", category: "Frontend" },
+    { name: "HTML/CSS", level: 90, icon: "🎨", category: "Frontend" },
+    { name: "Node.js", level: 70, icon: "🟢", category: "Backend" },
+    { name: "Python", level: 75, icon: "🐍", category: "Programming" },
+    { name: "Git/GitHub", level: 85, icon: "📁", category: "Tools" }
+  ];
+
+ 
+
+
+  return (
+    <>
+      <nav className="navbar">
+        <div className="nav-container">
+          <div className="nav-logo">
+            <span className="logo-gradient">Doğa Ata Demir</span>
+             </div>
+          
+          <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
+            {['home', 'about', 'education', 'skills', 'projects', 'contact'].map((item) => (
+              <button
+                key={item}
+                onClick={() => scrollToSection(item)}
+                className={`nav-link ${activeSection === item ? 'active' : ''}`}
+              >
+                {item === 'home' ? 'Ana Sayfa' : 
+                 item === 'about' ? 'Hakkımda' : 
+                 item === 'education' ? 'Eğitim' :
+                 item === 'skills' ? 'Yetenekler' : 
+                 item === 'projects' ? 'Projeler' : 'İletişim'}
+              </button>
+            ))}
+          </div>
+          
+          <button 
+            className="mobile-menu-btn"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </nav>
+
+      <main>
+        <section id="home" className="hero">
+          <div className="hero-bg">
+            <div className="floating-shapes">
+              <div className="shape shape-1"></div>
+              <div className="shape shape-2"></div>
+              <div className="shape shape-3"></div>
+              <div className="shape shape-4"></div>
+              <div className="shape shape-5"></div>
+            </div>
+          </div>
+          
+          <div className="hero-content">
+            <div className="hero-text">
+          
+              <h1 className="hero-title">
+                <span className="title-line">Ben</span>
+                <span className="title-line hero-name">Doğa Ata Demir</span>
+                <span className="title-line">Bilgisayar Mühendisi</span>
+              </h1>
+              <p className="hero-description">
+                Yeni mezun bir bilgisayar mühendisi olarak, modern web teknolojileri ile 
+                yaratıcı projeler geliştirmeye tutkulu biriyim. Öğrenmeye açık, enerjik 
+                ve kod yazmayı seven biri olarak kariyerime yeni başlıyorum! 🚀
+              </p>
+              <div className="hero-buttons">
+                <button 
+                  className="btn btn-primary"
+                  onClick={() => scrollToSection('projects')}
+                >
+                  Projelerimi İncele ✨
+                </button>
+                <button 
+                  className="btn btn-secondary"
+                  onClick={() => scrollToSection('contact')}
+                >
+                  Benimle İletişime Geç 📧
+                </button>
+              </div>
+              <div className="hero-status">
+               
+              </div>
+            </div>
+            
+            <div className="hero-image">
+              <div className="image-container">
+                <img 
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face"
+                  alt="Profile"
+                  className="profile-img"
+                />
+                <div className="image-decoration"></div>
+              </div>
+            </div>
+          </div>
+          
+          <button 
+            className="scroll-indicator"
+            onClick={() => scrollToSection('about')}
+          >
+            <div className="scroll-icon">↓</div>
+          </button>
+        </section>
+
+        <section id="about" className="about">
+          <div className="container">
+            <h2 className="section-title">Hakkımda 🙋‍♂️</h2>
+            <div className="about-content">
+              <div className="about-text">
+                <p>
+                  Merhabalar! Ben Ahmet, 2024 yılında bilgisayar mühendisliği bölümünden 
+                  mezun oldum. Üniversite yıllarımda web geliştirme konularına odaklandım 
+                  ve bu alanda kendimi geliştirmeye devam ediyorum.
+                </p>
+                <p>
+                  Kod yazmayı, problem çözmeyi ve yeni teknolojiler öğrenmeyi seviyorum. 
+                  Özellikle frontend geliştirme ve kullanıcı deneyimi konularına ilgi duyuyorum. 
+                  Takım çalışmasına açık, öğrenmeye hevesli ve kariyerime heyecanla başlamak 
+                  istiyorum! 💪
+                </p>
+                <div className="personality-traits">
+                  <div className="trait">
+                    <span className="trait-icon">🎯</span>
+                    <span>Hedef odaklı</span>
+                  </div>
+                  <div className="trait">
+                    <span className="trait-icon">🤝</span>
+                    <span>Takım oyuncusu</span>
+                  </div>
+                  <div className="trait">
+                    <span className="trait-icon">📚</span>
+                    <span>Sürekli öğrenen</span>
+                  </div>
+                  <div className="trait">
+                    <span className="trait-icon">⚡</span>
+                    <span>Hızlı adapte olan</span>
+                  </div>
+                </div>
+              </div>
+              <div className="about-image">
+                <img 
+                  src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=500&h=600&fit=crop"
+                  alt="Coding"
+                  className="about-img"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+{/* ===== Eğitim Bölümü ===== */}
+<section id="education" className="education section">
+  <h2 className="section-title">Eğitim</h2>
+
+  <div className="education-timeline">
+    {/* 🎓 Bilgisayar Mühendisliği */}
+    <div className="timeline-item">
+      <div className="timeline-marker">
+        <div className="marker-inner">💻</div>
+      </div>
+      <div className="timeline-content">
+        <div className="education-card">
+          <div className="card-header">
+            <div>
+              <h3 className="education-degree">Lisans | Bilgisayar Mühendisliği</h3>
+              <h4 className="education-school">TED Üniversitesi</h4>
+            </div>
+            <div className="education-meta">
+              <span className="education-year">2020 – 2025</span>
+            </div>
+          </div>
+          <p className="education-description">
+            Algoritmalar, yazılım geliştirme, yapay zeka ve modern mühendislik 
+            yaklaşımları üzerine yoğunlaştım. Takım projeleri ve araştırmalarla 
+            analitik düşünme ve problem çözme becerilerimi geliştirdim.
+          </p>
+          <div className="education-achievements">
+            <span className="achievement-tag">C++ &amp; Python</span>
+            <span className="achievement-tag">Yapay Zeka</span>
+            <span className="achievement-tag">Web Geliştirme</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* 📊 İşletme Ek Dal */}
+    <div className="timeline-item">
+      <div className="timeline-marker">
+        <div className="marker-inner">📊</div>
+      </div>
+      <div className="timeline-content">
+        <div className="education-card">
+          <div className="card-header">
+            <div>
+              <h3 className="education-degree">Ek Dal | İşletme</h3>
+              <h4 className="education-school">TED Üniversitesi</h4>
+            </div>
+            <div className="education-meta">
+              <span className="education-year">2023 – 2025</span>
+            </div>
+          </div>
+          <p className="education-description">
+            Yönetim, pazarlama ve finans temellerini bilgisayar mühendisliğiyle 
+            birleştirerek teknik bilgiye iş perspektifi kazandırdım. 
+            Gelecekte teknoloji ile iş dünyasını birleştiren projelerde güçlü 
+            bir temel oluşturuyorum.
+          </p>
+          <div className="education-achievements">
+            <span className="achievement-tag">Yönetim</span>
+            <span className="achievement-tag">Finans</span>
+            <span className="achievement-tag">Pazarlama</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+        <section id="skills" className="skills">
+          <div className="container">
+            <h2 className="section-title">Yeteneklerim 💪</h2>
+            <div className="skills-intro">
+              <p>Öğrenci hayatımda edindiğim ve sürekli geliştirmeye devam ettiğim yeteneklerim:</p>
+            </div>
+            <div className="skills-grid">
+              {skills.map((skill, index) => (
+                <div key={index} className="skill-card">
+                  <div className="skill-header">
+                    <div className="skill-icon">
+                      <span>{skill.icon}</span>
+                    </div>
+                    <div className="skill-info">
+                      <h3 className="skill-name">{skill.name}</h3>
+                      <span className="skill-category">{skill.category}</span>
+                    </div>
+                  </div>
+                  <div className="skill-progress">
+                    <div 
+                      className="skill-progress-fill"
+                      style={{ width: `${skill.level}%` }}
+                    ></div>
+                  </div>
+                  <span className="skill-percentage">{skill.level}%</span>
+                </div>
+              ))}
+            </div>
+            <div className="skills-note">
+              <p>🚀 Sürekli öğrenmeye devam ediyorum ve yeni teknolojiler deniyorum!</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="projects" className="projects">
+          <div className="container">
+            <h2 className="section-title">Projelerim 🚀</h2>
+            <div className="projects-intro">
+              <p>Üniversite döneminde ve kendi başıma geliştirdiğim projeler:</p>
+            </div>
+            <div className="projects-grid">
+              {projects.map((project, index) => (
+                <div key={index} className="project-card">
+                  <div className="project-status">
+                    <span className={`status-badge ${project.status === 'Tamamlandı' ? 'completed' : 'in-progress'}`}>
+                      {project.status}
+                    </span>
+                  </div>
+                  <div className="project-image">
+                    <img src={project.image} alt={project.title} />
+                    <div className="project-overlay">
+                      <div className="project-links">
+                        <a href={project.github} className="project-link">
+                          <span>📁</span>
+                          <span>GitHub</span>
+                        </a>
+                        <a href={project.live} className="project-link">
+                          <span>🔗</span>
+                          <span>Canlı</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="project-content">
+                    <h3 className="project-title">{project.title}</h3>
+                    <p className="project-description">{project.description}</p>
+                    <div className="project-tech">
+                      {project.tech.map((tech, i) => (
+                        <span key={i} className="tech-tag">{tech}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="contact">
+          <div className="container">
+            <h2 className="section-title">İletişim 📞</h2>
+            <div className="contact-content">
+              <div className="contact-info">
+                <h3>Birlikte Çalışalım! 🤝</h3>
+                <p>
+                  Yeni mezun bir yazılımcı olarak, kariyerime başlamak için harika 
+                  fırsatlar arıyorum. Eğer ekibinize enerjik ve öğrenmeye açık 
+                  bir geliştirici arıyorsanız, benimle iletişime geçin! 
+                </p>
+                <div className="contact-highlight">
+                  <span>💡</span>
+                  <p>Junior pozisyonlar, staj fırsatları veya freelance projeler için uygunum!</p>
+                </div>
+                <div className="contact-methods">
+                  <a href="mailto:ahmet@example.com" className="contact-method">
+                    <span>📧</span>
+                    <div>
+                      <strong>E-posta</strong>
+                      <span>ahmet@example.com</span>
+                    </div>
+                  </a>
+                  <a href="https://linkedin.com" className="contact-method">
+                    <span>💼</span>
+                    <div>
+                      <strong>LinkedIn</strong>
+                      <span>/in/ahmet-yilmaz</span>
+                    </div>
+                  </a>
+                  <a href="https://github.com" className="contact-method">
+                    <span>📁</span>
+                    <div>
+                      <strong>GitHub</strong>
+                      <span>/ahmetyilmaz</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              
+              <div className="contact-form">
+                <div className="form-header">
+                  <h4>Hızlı Mesaj Gönderin 💌</h4>
+                  <p>Size 24 saat içinde dönüş yapacağım!</p>
+                </div>
+                <div className="form-group">
+                  <label>Adınız</label>
+                  <input 
+                    type="text" 
+                    placeholder="Adınızı yazın..." 
+                    className="form-input"
+                  />
+                </div>
+                <div className="form-group">
+                  <label>E-posta Adresiniz</label>
+                  <input 
+                    type="email" 
+                    placeholder="ornek@email.com" 
+                    className="form-input"
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Mesajınız</label>
+                  <textarea 
+                    placeholder="Merhaba Ahmet, seninle tanışmak isterim..." 
+                    className="form-textarea"
+                    rows={4}
+                  ></textarea>
+                </div>
+                <button className="btn btn-primary full-width">
+                  Mesajı Gönder 🚀
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="footer">
+        <div className="container">
+          <div className="footer-content">
+            <p>&copy; 2025 | Doğa Ata Demir </p>
+            <p className="footer-motto">💻 Kodlayarak öğreniyorum, öğrenerek büyüyorum! 🌱</p>
+          </div>
+        </div>
+      </footer>
+    </>
+  );
+};
+
+export default App;
