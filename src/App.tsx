@@ -395,11 +395,11 @@ const App = () => {
                   <p>Junior pozisyonlar, staj fırsatları veya freelance projeler için uygunum!</p>
                 </div>
                 <div className="contact-methods">
-                  <a href="mailto:ahmet@example.com" className="contact-method">
+                  <a href="mailto:dogaatademir@gmail.com" className="contact-method">
                     <span>📧</span>
                     <div>
-                      <strong>E-posta</strong>
-                      <span>ahmet@example.com</span>
+                      <strong>E-posta: </strong>
+                      <span>dogaatademir@gmail.com</span>
                     </div>
                   </a>
                   <a href="https://linkedin.com" className="contact-method">
