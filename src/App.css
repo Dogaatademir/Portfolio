@@ -1,20 +1,43 @@
 /* Gelişmiş Portfolio CSS */
 
 /* Variables */
+/* === Tema Renkleri === */
+
+/* Varsayılan (dark) */
 :root {
   --primary: #8b5cf6;
   --primary-dark: #7c3aed;
   --secondary: #06d6a0;
   --accent: #f72585;
+
   --bg-dark: #0a0a0a;
   --bg-card: rgba(15, 15, 15, 0.8);
   --text-primary: #ffffff;
   --text-secondary: #a0a0a0;
+
   --gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #f72585 100%);
   --gradient-secondary: linear-gradient(135deg, #06d6a0 0%, #3b82f6 100%);
   --shadow-glow: 0 0 40px rgba(139, 92, 246, 0.3);
   --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.5);
   --border-radius: 16px;
+}
+
+/* Açık Tema */
+.light-theme {
+  --bg-dark: #f9fafb; /* açık gri arka plan */
+  --bg-card: #ffffff;
+  --text-primary: #1f2937; /* koyu gri yazı */
+  --text-secondary: #4b5563; /* orta gri */
+  --shadow-card: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Koyu Tema */
+.dark-theme {
+  --bg-dark: #0a0a0a;
+  --bg-card: rgba(15, 15, 15, 0.8);
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 /* Global Styles */
@@ -34,11 +57,16 @@ html {
 body {
   cursor: auto;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* ÖNEMLİ: Arka planı .dynamic-bg boyar; body şeffaf olmalı */
   background: var(--bg-dark);
   color: var(--text-primary);
   overflow-x: hidden;
   line-height: 1.6;
+  justify-content: center;
 }
+
+/* İçeriğin arka plan üstünde kalması için */
+main { position: relative; z-index: 1; }
 
 /* Container (tek tanım) */
 .container {
@@ -47,13 +75,19 @@ body {
   padding: 0 2rem;
   margin: 0 auto;
   box-sizing: border-box;
+  
 }
 
 /* Custom Cursors */
 .cursor, .cursor-follower { display: none !important; }
 
-/* Dynamic Background */
-.dynamic-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+/* Dynamic Background (DÜZELTİLEN) */
+.dynamic-bg {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0;                 /* -1 yerine 0 */
+  overflow: hidden;
+  pointer-events: none;       /* tıklamaları engellemesin */
+}
 .particle-field { position: absolute; width: 100%; height: 100%; }
 .particle { position: absolute; width: 2px; height: 2px; background: rgba(139, 92, 246, 0.6); border-radius: 50%; animation: particleFloat 15s infinite linear; }
 .particle-0 { left: 10%; animation-delay: 0s; } .particle-1 { left: 20%; animation-delay: 3s; }
@@ -81,8 +115,9 @@ body {
 
 /* Navigation */
 .navbar {
-  position: fixed; top: 0; width: 100%;
-  background: rgba(10, 10, 10, 0.95);
+position: fixed; top: 0; left: 0; right: 0; 
+  width: 100%;
+  background: var(--bg-dark);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(139, 92, 246, 0.2);
   z-index: 1000; transition: all 0.3s ease;
@@ -97,11 +132,14 @@ body {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
-  display: flex; justify-content: space-between; align-items: center;
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
   height: 80px;
+  
 }
 
-.nav-logo { font-size: 1.5rem; font-weight: 800; cursor: pointer; margin-right: auto; }
+.nav-logo { font-size: 1.5rem; font-weight: 800; cursor: pointer; margin-right:auto; }
 
 .logo-gradient {
   background-image: var(--gradient-primary);
@@ -318,7 +356,7 @@ section { padding: 8rem 0; position: relative; }
 .item-6 { bottom: -25px; left: 50%; transform: translateX(-50%); }
 
 /* Education Section */
-.education { background: var(--bg-dark); }
+
 .education-timeline { position: relative; max-width: 900px; margin: 0 auto; }
 .education-timeline::before {
   content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
@@ -405,7 +443,7 @@ section { padding: 8rem 0; position: relative; }
 .note-icon { font-size: 1.5rem; }
 
 /* Projects Section */
-.projects { background: var(--bg-dark); }
+
 .projects-intro { text-align: center; margin-bottom: 4rem; }
 .projects-intro p { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
 
@@ -466,7 +504,7 @@ section { padding: 8rem 0; position: relative; }
 .contact { backdrop-filter: blur(10px); }
 .contact-content { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
 
-.contact-info h3 { color: white; margin-bottom: 0.5rem; }
+.contact-info h3 { color: var(--text-primary); margin-bottom: 0.5rem; }
 .contact-info { position: relative; font-size: 1.2rem; color: var(--text-secondary); }
 
 .contact-header h3 {
@@ -478,7 +516,7 @@ section { padding: 8rem 0; position: relative; }
 .contact-highlight {
   background: var(--bg-card); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: var(--border-radius);
   padding: 2rem; margin-bottom: 2rem; margin-top: 1rem; display: flex; align-items: flex-start; gap: 1.5rem;
-  backdrop-filter: blur(10px); color: white;
+  backdrop-filter: blur(10px); color: var(--text-primary);
 }
 .highlight-icon {
   font-size: 2rem; background: var(--gradient-primary);
@@ -526,14 +564,15 @@ section { padding: 8rem 0; position: relative; }
 }
 .form-textarea { resize: vertical; min-height: 120px; }
 .contact-form .btn.full-width {
-    margin-top: 1rem; /* Mesaj gönder butonuna margin-top eklendi */
+  margin-top: 1rem; /* Mesaj gönder butonuna margin-top eklendi */
 }
 
 /* Footer */
 .footer {
-  background: var(--bg-dark);
+  
   border-top: 1px solid rgba(139, 92, 246, 0.2);
   padding: 4rem 0 2rem;
+  
 }
 .footer-content { display: flex; flex-direction: column; gap: 3rem; align-items: center; }
 .footer-main { display: grid; grid-template-columns: 1fr auto auto; gap: 4rem; align-items: start; }
@@ -638,16 +677,7 @@ section .container { margin-left: auto; margin-right: auto; }
 }
 
 /* Mobil overflow düzeltmeleri */
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-.hero-content {
-  max-width: 100%;
-  overflow-x: hidden;
-}
-
-.hero-text {
-  max-width: 100%;
-  overflow-wrap: break-word;
-}
+.hero-content { max-width: 100%; overflow-x: hidden; }
+.hero-text { max-width: 100%; overflow-wrap: break-word; }
