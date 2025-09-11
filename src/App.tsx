@@ -240,7 +240,7 @@ const App = () => {
     {/* 🎓 Bilgisayar Mühendisliği */}
     <div className="timeline-item">
       <div className="timeline-marker">
-        <div className="marker-inner">💻</div>
+        <div className="marker-inner"></div>
       </div>
       <div className="timeline-content">
         <div className="education-card">
@@ -270,7 +270,7 @@ const App = () => {
     {/* 📊 İşletme Ek Dal */}
     <div className="timeline-item">
       <div className="timeline-marker">
-        <div className="marker-inner">📊</div>
+        <div className="marker-inner"></div>
       </div>
       <div className="timeline-content">
         <div className="education-card">

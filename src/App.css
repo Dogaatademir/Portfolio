@@ -42,7 +42,13 @@ body {
 /* Custom Cursors */
 .cursor, .cursor-follower { display: none !important; }
 
-
+/* Dynamic Background */
+.dynamic-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; }
+.particle-field { position: absolute; width: 100%; height: 100%; }
+.particle { position: absolute; width: 2px; height: 2px; background: rgba(139, 92, 246, 0.6); border-radius: 50%; animation: particleFloat 15s infinite linear; }
+.particle-0 { left: 10%; animation-delay: 0s; } .particle-1 { left: 20%; animation-delay: 3s; }
+.particle-2 { left: 30%; animation-delay: 6s; } .particle-3 { left: 40%; animation-delay: 9s; }
+.particle-4 { left: 50%; animation-delay: 12s; }
 
 @keyframes particleFloat {
   0% { opacity: 0; transform: translateY(100vh) scale(0); }
@@ -309,11 +315,7 @@ section { padding: 8rem 0; position: relative; }
   background: var(--gradient-primary); transform: translateX(-50%);
 }
 .timeline-item { position: relative; margin-bottom: 4rem; }
-.timeline-marker {
-  position: absolute; left: 50%; top: 2rem; width: 60px; height: 60px;
-  background: var(--bg-card); border: 3px solid var(--primary); border-radius: 50%;
-  transform: translateX(-50%); display: flex; align-items: center; justify-content: center; z-index: 1;
-}
+
 .marker-inner { font-size: 1.5rem; }
 .timeline-content { width: calc(50% - 2rem); }
 .timeline-item:nth-child(odd) .timeline-content { margin-left: calc(50% + 2rem); }
@@ -597,4 +599,34 @@ section .container { margin-left: auto; margin-right: auto; }
   .hero-content {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
+}
+
+/* Masaüstünde geniş yayılım — mobil/tablette media query'ler kazansın */
+@media (min-width: 1025px) {
+  .projects-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+  .skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  .contact-content,
+  .about-content,
+  .hero-content {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+/* Mobil overflow düzeltmeleri */
+* {
+  box-sizing: border-box;
+}
+
+.hero-content {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.hero-text {
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
