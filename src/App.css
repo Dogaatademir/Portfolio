@@ -53,7 +53,7 @@ body {
 .cursor, .cursor-follower { display: none !important; }
 
 /* Dynamic Background */
-.dynamic-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; overflow: hidden; }
+.dynamic-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
 .particle-field { position: absolute; width: 100%; height: 100%; }
 .particle { position: absolute; width: 2px; height: 2px; background: rgba(139, 92, 246, 0.6); border-radius: 50%; animation: particleFloat 15s infinite linear; }
 .particle-0 { left: 10%; animation-delay: 0s; } .particle-1 { left: 20%; animation-delay: 3s; }
@@ -419,7 +419,14 @@ section { padding: 8rem 0; position: relative; }
 @keyframes projectReveal { to { opacity: 1; transform: translateY(0); } }
 .project-card:hover { transform: translateY(-20px); border-color: var(--primary); box-shadow: var(--shadow-glow); }
 
-.project-header { position: relative; padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+.project-header {
+  position: relative;
+  z-index: 1; /* Resmin her zaman önüne gelmesi için z-index eklendi */
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .project-status { z-index: 5; } /* Z-index'i 5'e yükseltilerek resmin önüne geçmesi sağlandı */
 .status-badge { padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.5px; }
 .status-badge.completed { background: var(--gradient-secondary); }

@@ -402,18 +402,18 @@ const App = () => {
                       <span>dogaatademir@gmail.com</span>
                     </div>
                   </a>
-                  <a href="https://linkedin.com" className="contact-method">
+                  <a href="https://linkedin.com/dogaatademir" className="contact-method">
                     <span>💼</span>
                     <div>
-                      <strong>LinkedIn</strong>
-                      <span>/in/ahmet-yilmaz</span>
+                      <strong>LinkedIn: </strong>
+                      <span>/in/dogaatademir</span>
                     </div>
                   </a>
-                  <a href="https://github.com" className="contact-method">
+                  <a href="https://github.com/dogaatademir" className="contact-method">
                     <span>📁</span>
                     <div>
-                      <strong>GitHub</strong>
-                      <span>/ahmetyilmaz</span>
+                      <strong>GitHub: </strong>
+                      <span>/dogaatademir</span>
                     </div>
                   </a>
                 </div>
