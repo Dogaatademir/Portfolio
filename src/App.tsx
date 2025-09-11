@@ -216,7 +216,7 @@ const App = () => {
             <div className="about-content">
               <div className="about-text">
                 <p>
-                  Merhabalar! Ben Ahmet, 2024 yılında bilgisayar mühendisliği bölümünden
+                  Merhabalar! Ben Ata, 2025 yılında bilgisayar mühendisliği bölümünden
                   mezun oldum. Üniversite yıllarımda web geliştirme konularına odaklandım
                   ve bu alanda kendimi geliştirmeye devam ediyorum.
                 </p>
@@ -419,7 +419,7 @@ const App = () => {
                 </div>
                 <div className="form-group">
                   <label>Mesajınız</label>
-                  <textarea placeholder="Merhaba Ahmet, seninle tanışmak isterim..." className="form-textarea" rows={4}></textarea>
+                  <textarea placeholder="Merhaba Ata, seninle tanışmak isterim..." className="form-textarea" rows={4}></textarea>
                 </div>
                 <button className="btn btn-primary full-width">Mesajı Gönder 🚀</button>
               </div>
