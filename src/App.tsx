@@ -4,49 +4,86 @@ import './App.css';
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    // varsa son seçimi hatırla
+    const saved = localStorage.getItem('theme');
+    return (saved === 'light' || saved === 'dark') ? saved : 'dark';
+  });
 
-  // Tema body class toggle
+  /* === (Sadece bu buton için) stil tanımı === */
+  const toggleStyles = `
+  .theme-toggle {
+    position: relative; width: 74px; height: 38px; border-radius: 999px;
+    background: rgba(15, 31, 45, 0.95);
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.03), 0 6px 18px rgba(0,0,0,.25);
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0; cursor: pointer; outline: none; user-select: none;
+  }
+  .theme-toggle:focus-visible { box-shadow: 0 0 0 3px rgba(139,92,246,.35); }
+  .tt-track {
+    position:absolute; inset: 0; border-radius: inherit; overflow: hidden;
+  }
+  .tt-icons {
+    position:absolute; inset: 0; display:flex; align-items:center; justify-content:space-between;
+    padding: 0 12px; pointer-events:none; opacity:.9;
+  }
+  .tt-icon { display:grid; place-items:center; width:18px; height:18px; }
+  .tt-icon svg { width:100%; height:100%; }
+  .tt-moon svg { fill: #dde7f3; }
+  .tt-sun  svg { fill: #ffd566; }
+  .tt-knob {
+    position:absolute; top: 4px; left: 4px; width: 30px; height: 30px; border-radius: 999px;
+    background: linear-gradient(180deg, #c9c9c9, #a9a9a9);
+    border: 1px solid rgba(0,0,0,.25);
+    box-shadow: 0 3px 8px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.6);
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
+    will-change: transform;
+  }
+  .theme-toggle.light .tt-knob { transform: translateX(36px); }
+  .theme-toggle.dark  .tt-knob { transform: translateX(0px); }
+
+  /* açık temada arka planı da biraz aç */
+  body.light-theme .theme-toggle {
+    background: rgba(235, 242, 248, 0.95);
+    border-color: rgba(0,0,0,.06);
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,.03), 0 6px 18px rgba(0,0,0,.1);
+  }
+  `;
+
+  // Body class + localStorage
   useEffect(() => {
     document.body.classList.remove('light-theme', 'dark-theme');
     document.body.classList.add(theme === 'light' ? 'light-theme' : 'dark-theme');
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
+  const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
 
   // Scroll aktif section takibi
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['home', 'about', 'education', 'skills', 'projects', 'contact'];
       const scrollPosition = window.scrollY + 100;
-
       for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const height = element.offsetHeight;
-
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + height) {
+        const el = document.getElementById(section);
+        if (el) {
+          const top = el.offsetTop;
+          const h = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + h) {
             setActiveSection(section);
             break;
           }
         }
       }
     };
-
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    const el = document.getElementById(sectionId);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
     setIsMenuOpen(false);
   };
 
@@ -57,27 +94,21 @@ const App = () => {
       description: "React ve Node.js kullanarak geliştirdiğim responsive blog platformu. Modern tasarım ve kullanıcı dostu arayüz.",
       image: "https://images.unsplash.com/photo-1486312338219-ce68e2c6b1d6?w=600&h=400&fit=crop",
       tech: ["React", "Node.js", "Express", "MongoDB"],
-      github: "#",
-      live: "#",
-      status: "Tamamlandı"
+      github: "#", live: "#", status: "Tamamlandı"
     },
     {
       title: "Todo List Uygulaması",
       description: "Local storage kullanarak veri saklayan, drag & drop özellikli görev yönetimi uygulaması.",
       image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600&h=400&fit=crop",
       tech: ["JavaScript", "HTML5", "CSS3", "Local Storage"],
-      github: "#",
-      live: "#",
-      status: "Tamamlandı"
+      github: "#", live: "#", status: "Tamamlandı"
     },
     {
       title: "Hava Durumu Uygulaması",
       description: "API entegrasyonu ile gerçek zamanlı hava durumu bilgilerini gösteren responsive web uygulaması.",
       image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=600&h=400&fit=crop",
       tech: ["Vue.js", "API Integration", "CSS Grid"],
-      github: "#",
-      live: "#",
-      status: "Geliştiriliyor"
+      github: "#", live: "#", status: "Geliştiriliyor"
     }
   ];
 
@@ -93,6 +124,9 @@ const App = () => {
 
   return (
     <>
+      {/* buton stili */}
+      <style>{toggleStyles}</style>
+
       {/* === Dinamik Arka Plan === */}
       <div className="dynamic-bg" aria-hidden>
         <div className="particle-field">
@@ -123,24 +157,37 @@ const App = () => {
                 onClick={() => scrollToSection(item)}
                 className={`nav-link ${activeSection === item ? 'active' : ''}`}
               >
-                {item === 'home' ? 'Ana Sayfa' :
-                 item === 'about' ? 'Hakkımda' :
-                 item === 'education' ? 'Eğitim' :
-                 item === 'skills' ? 'Yetenekler' :
-                 item === 'projects' ? 'Projeler' : 'İletişim'}
+                {item === 'home' ? 'Ana Sayfa'
+                  : item === 'about' ? 'Hakkımda'
+                  : item === 'education' ? 'Eğitim'
+                  : item === 'skills' ? 'Yetenekler'
+                  : item === 'projects' ? 'Projeler' : 'İletişim'}
               </button>
             ))}
           </div>
 
-          {/* Tema Toggle */}
-          <button onClick={toggleTheme} className="btn btn-secondary" style={{ marginLeft: "1rem" }}>
-            {theme === 'light' ? '🌙 Koyu' : '☀️ Açık'}
-          </button>
+          {/* === Tema Geçiş Butonu (ikonlu & kayan knob) === */}
+         <button
+  className={`theme-toggle ${theme}`}
+  onClick={toggleTheme}
+  aria-label="Tema değiştir"
+  title={theme === 'light' ? 'Koyu temaya geç' : 'Açık temaya geç'}
+  style={{ marginLeft: '12px' }}
+>
+  {/* Sol tarafta güneş */}
+  <span className="tt-emoji left">☀️</span>
 
-          <button
-            className="mobile-menu-btn"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
+  {/* Ortadaki knob */}
+  <span className="tt-knob"></span>
+
+  {/* Sağ tarafta ay */}
+  <span className="tt-emoji right">🌙</span>
+</button>
+
+
+
+          {/* Mobil menü */}
+          <button className="mobile-menu-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             <span></span><span></span><span></span>
           </button>
         </div>
@@ -173,16 +220,10 @@ const App = () => {
                 ve kod yazmayı seven biri olarak kariyerime yeni başlıyorum! 🚀
               </p>
               <div className="hero-buttons">
-                <button
-                  className="btn btn-primary"
-                  onClick={() => scrollToSection('projects')}
-                >
+                <button className="btn btn-primary" onClick={() => scrollToSection('projects')}>
                   Projelerimi İncele ✨
                 </button>
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => scrollToSection('contact')}
-                >
+                <button className="btn btn-secondary" onClick={() => scrollToSection('contact')}>
                   Benimle İletişime Geç 📧
                 </button>
               </div>
@@ -201,10 +242,7 @@ const App = () => {
             </div>
           </div>
 
-          <button
-            className="scroll-indicator"
-            onClick={() => scrollToSection('about')}
-          >
+          <button className="scroll-indicator" onClick={() => scrollToSection('about')}>
             <div className="scroll-icon">↓</div>
           </button>
         </section>
@@ -233,13 +271,7 @@ const App = () => {
                   <div className="trait"><span className="trait-icon">⚡</span><span>Hızlı adapte olan</span></div>
                 </div>
               </div>
-              <div className="about-image">
-                <img
-                  src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=500&h=600&fit=crop"
-                  alt="Coding"
-                  className="about-img"
-                />
-              </div>
+             
             </div>
           </div>
         </section>
@@ -393,7 +425,7 @@ const App = () => {
                     <span>📧</span>
                     <div><strong>E-posta: </strong><span>dogaatademir@gmail.com</span></div>
                   </a>
-                  <a href="https://linkedin.com/dogaatademir" className="contact-method">
+                  <a href="https://linkedin.com/in/dogaatademir" className="contact-method">
                     <span>💼</span>
                     <div><strong>LinkedIn: </strong><span>/in/dogaatademir</span></div>
                   </a>
