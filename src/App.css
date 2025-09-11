@@ -346,6 +346,7 @@ section { padding: 8rem 0; position: relative; }
 .education-year {
   background: var(--gradient-primary); color: white; padding: 0.5rem 1rem; border-radius: 20px;
   font-weight: 600; font-size: 0.9rem; text-align: center;
+  white-space: nowrap; /* Eğitim yılı yazısının tek satırda kalmasını sağlar */
 }
 .education-gpa {
   background: var(--gradient-secondary); color: white; padding: 0.25rem 0.75rem; border-radius: 15px;
@@ -419,7 +420,7 @@ section { padding: 8rem 0; position: relative; }
 .project-card:hover { transform: translateY(-20px); border-color: var(--primary); box-shadow: var(--shadow-glow); }
 
 .project-header { position: relative; padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-.project-status { z-index: 2; }
+.project-status { z-index: 5; } /* Z-index'i 5'e yükseltilerek resmin önüne geçmesi sağlandı */
 .status-badge { padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 0.5px; }
 .status-badge.completed { background: var(--gradient-secondary); }
 .status-badge.in-progress { background: var(--gradient-primary); }
@@ -517,6 +518,9 @@ section { padding: 8rem 0; position: relative; }
   outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1); background: rgba(139, 92, 246, 0.1);
 }
 .form-textarea { resize: vertical; min-height: 120px; }
+.contact-form .btn.full-width {
+    margin-top: 1rem; /* Mesaj gönder butonuna margin-top eklendi */
+}
 
 /* Footer */
 .footer {
