@@ -425,9 +425,9 @@ const App = () => {
                     <span>📧</span>
                     <div><strong>E-posta: </strong><span>dogaatademir@gmail.com</span></div>
                   </a>
-                  <a href="https://linkedin.com/in/dogaatademir" className="contact-method">
-                    <span>💼</span>
-                    <div><strong>LinkedIn: </strong><span>/in/dogaatademir</span></div>
+                  <a href="tel:+905376903333" className="contact-method">
+                    <span>📞</span>
+                    <div><strong>Telefon:  </strong><span>+90 537 690 3333</span></div>
                   </a>
                   <a href="https://github.com/dogaatademir" className="contact-method">
                     <span>📁</span>
