@@ -233,7 +233,7 @@ const App = () => {
             <div className="hero-image">
               <div className="image-container">
                 <img
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face"
+                  src="ProfilePhoto.heic"
                   alt="Profile"
                   className="profile-img"
                 />
@@ -438,7 +438,7 @@ const App = () => {
 
               <div className="contact-form">
                 <div className="form-header">
-                  <h4>Hızlı Mesaj Gönderin 💌</h4>
+                  <h4>Hızlı Mesaj Gönderin</h4>
                   <p>Size 24 saat içinde dönüş yapacağım!</p>
                 </div>
                 <div className="form-group">
